@@ -1,0 +1,65 @@
+/* Hyper-Targeted scroll story (hero + section 2). Works with hyper/story.js and hyper/claw.css. */
+
+/* ---------- sticky runway: every beat gets ~2-3 wheel notches ---------- */
+@media (min-width:992px) and (min-height:480px) and (prefers-reduced-motion:no-preference){
+  .sov-intro[data-hyper]{min-height:max(400vh,3100px);min-height:max(400dvh,3100px)}
+  /* mode C: hero autoplays, only ~1.3 screens of scroll for the board -> map hand-off */
+  .sov-intro[data-hyper][data-mode="c"]{min-height:230vh;min-height:230dvh}
+}
+.hx-skip{position:absolute;right:24px;bottom:20px;z-index:8;display:flex;align-items:center;gap:6px;padding:6px 12px;
+  border:1px solid #e3e3e3;border-radius:999px;background:rgba(255,255,255,.9);color:#4d4d4d;font:500 13px/1 inherit;cursor:pointer;
+  transition:opacity .25s,background-color .2s}
+.hx-skip:hover{background:#fff;color:#0a8538}
+.hx-skip.is-off{opacity:0;pointer-events:none}
+.hx-skip__ic{width:14px;height:14px}
+@media (max-width:991.98px),(prefers-reduced-motion:reduce){.hx-skip{display:none}
+}
+
+/* ---------- board extras ---------- */
+.hc-zl-st{opacity:0;margin-left:calc(var(--sov-u)*4);color:#d4ffe4;transition:opacity .3s steps(3,end)}
+.claw-scene.is-sealed .hc-zl-st{opacity:1}
+.claw-scene.is-sealed .hc-zl--vn .hc-zl-ic{animation:hcBlink .4s steps(2,jump-none) 4}
+.claw-scene.is-sealed .hc-led.is-on{animation:hcBlink .4s steps(2,jump-none) 4}
+.claw-scene.is-sealed .hc-led.is-on + .hc-led.is-on{animation-delay:.15s}
+.hc-work{will-change:transform}
+
+/* ---------- section 2: 5 availability zones as small square pins (pop in, burst, then blink) ---------- */
+.sov-intro[data-hyper] .sov-intro__pin{display:none}
+.hx-pin{position:absolute;width:16px;height:16px;margin:-8px 0 0 -8px;background:#0db14b;border:3px solid #fff;border-radius:3px;
+  box-shadow:0 0 0 1px rgba(10,96,42,.25);opacity:0;scale:.2;transition:opacity .15s,scale .35s cubic-bezier(.34,1.56,.64,1)}
+.hx-pin.is-in{opacity:1;scale:1}
+.hx-pin::before,.hx-pin::after{content:"";position:absolute;inset:-3px;border:2px solid #0db14b;border-radius:4px;opacity:0;pointer-events:none}
+.hx-pin.is-in::after{animation:hxBurst .8s steps(6,end) forwards}
+.hx-done .hx-pin.is-in{animation:hxAzBlink 1.1s ease-in-out infinite}
+.hx-done .hx-pin.is-in::before{animation:hxPulse 1.8s ease-out infinite}
+.hx-done .hx-pin.is-in:nth-of-type(2n){animation-delay:.4s}
+@keyframes hxBurst{0%{opacity:1;scale:1}100%{opacity:0;scale:3.2}}
+@keyframes hxPulse{0%{opacity:.8;scale:1}70%,100%{opacity:0;scale:2.6}}
+@keyframes hxAzBlink{0%,100%{opacity:1}50%{opacity:.45}}
+
+/* ---------- stage overlay ---------- */
+.hx-layer{position:absolute;inset:0;pointer-events:none;z-index:6}
+
+/* workloads flying home */
+.hx-fly,.hx-ghost{position:absolute;top:0;left:0;width:calc(var(--fu)*66);height:calc(var(--fu)*66);
+  border-radius:calc(var(--fu)*10);transform-origin:50% 50%;opacity:0;will-change:transform}
+.hx-fly{display:flex;align-items:center;justify-content:center;background:#fff;color:#0a8538;--ic-cut:#fff;
+  box-shadow:0 calc(var(--fu)*10) 0 #0a602a;transition:background-color .2s,box-shadow .2s,border-radius .25s;
+  font-family:'JetBrains Mono',ui-monospace,monospace}
+.hx-fly-in{display:flex;flex-direction:column;align-items:center;gap:calc(var(--fu)*3);text-align:center;transition:opacity .2s}
+.hx-fly .hc-icon{width:calc(var(--fu)*28);height:calc(var(--fu)*28);color:#0db14b}
+.hx-fly .hc-name{display:block;font-size:calc(var(--fu)*8.5);line-height:1.1;font-weight:700}
+.hx-fly.is-pin{background:#0db14b;box-shadow:none;border-radius:50%}
+.hx-fly.is-pin .hx-fly-in{opacity:0}
+.hx-ghost{background:#0db14b}
+
+/* ---------- process bar (no text) ---------- */
+.hx-steps{display:none!important;position:absolute;top:0;left:0;display:flex;align-items:center;gap:12px;will-change:transform}
+.hx-steps__bar{display:flex;gap:6px}
+.hx-steps__bar i{display:block;width:10px;height:10px;border-radius:3px;background:#e3e3e3;transition:background-color .25s}
+.hx-steps__bar i.is-done{background:#0db14b}
+.hx-steps__bar i.is-cur{background:#0db14b;animation:hxBlink 1s steps(2,jump-none) infinite}
+/* in the hero the flow panel's own 3 arrows are the scroll cue; on the map the bar gets its own arrow */
+.hx-steps__arrow{width:14px;height:14px;color:#0a8538;opacity:var(--hx-arrow,0);animation:hxNudge 1.2s ease-in-out infinite}
+@keyframes hxNudge{0%,100%{transform:translateY(-2px)}50%{transform:translateY(3px)}}
+@keyframes hxBlink{50%{opacity:.35}}

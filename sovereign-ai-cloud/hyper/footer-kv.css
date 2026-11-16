@@ -1,0 +1,16 @@
+/* ---------- footer key visual: claw + workload pile, sits BEHIND the white footer card ----------
+   hyper/footer-kv-dark.svg = footer-pixel-art/footer-kv-dark-web.svg (1440 x 720: 240px pixel-dissolve top + scene) */
+app-sovereign-footer{display:block;position:relative;--kv-h:max(300px,50vw);--kv-overlap:clamp(56px,5.5vw,96px);--kv-u:calc(100vw / 1440)}
+.sov-footer__kv{position:relative;z-index:0;display:block;width:100%;height:var(--kv-h);object-fit:cover;object-position:50% 100%;
+  margin-bottom:calc(var(--kv-overlap) * -1);pointer-events:none;user-select:none}
+app-sovereign-footer .sov-footer{position:relative;z-index:1}
+/* below the graphic: dark ground + the workload pile keeps going beside the card, fading out downward */
+app-sovereign-footer::before{content:"";position:absolute;left:0;right:0;top:calc(var(--kv-h) - 1px);bottom:0;z-index:0;pointer-events:none;
+  background:#0b2b2b}
+app-sovereign-footer::after{content:"";position:absolute;left:0;right:0;top:calc(var(--kv-h) - 1px);bottom:0;z-index:0;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22320%22%20height%3D%22240%22%3E%3Crect%20x%3D%220%22%20y%3D%2210%22%20width%3D%2270%22%20height%3D%2270%22%20rx%3D%2210%22%20fill%3D%22%231a4d4b%22/%3E%3Crect%20x%3D%2280%22%20y%3D%2210%22%20width%3D%2270%22%20height%3D%2270%22%20rx%3D%2210%22%20fill%3D%22%2322605c%22/%3E%3Crect%20x%3D%22160%22%20y%3D%2210%22%20width%3D%2270%22%20height%3D%2270%22%20rx%3D%2210%22%20fill%3D%22%232c716c%22/%3E%3Crect%20x%3D%22240%22%20y%3D%2210%22%20width%3D%2270%22%20height%3D%2270%22%20rx%3D%2210%22%20fill%3D%22%231a4d4b%22/%3E%3Crect%20x%3D%220%22%20y%3D%2290%22%20width%3D%2270%22%20height%3D%2270%22%20rx%3D%2210%22%20fill%3D%22%2322605c%22/%3E%3Crect%20x%3D%2280%22%20y%3D%2290%22%20width%3D%2270%22%20height%3D%2270%22%20rx%3D%2210%22%20fill%3D%22%233c8580%22/%3E%3Crect%20x%3D%22160%22%20y%3D%2290%22%20width%3D%2270%22%20height%3D%2270%22%20rx%3D%2210%22%20fill%3D%22%231a4d4b%22/%3E%3Crect%20x%3D%22240%22%20y%3D%2290%22%20width%3D%2270%22%20height%3D%2270%22%20rx%3D%2210%22%20fill%3D%22%232c716c%22/%3E%3Crect%20x%3D%220%22%20y%3D%22170%22%20width%3D%2270%22%20height%3D%2270%22%20rx%3D%2210%22%20fill%3D%22%232c716c%22/%3E%3Crect%20x%3D%2280%22%20y%3D%22170%22%20width%3D%2270%22%20height%3D%2270%22%20rx%3D%2210%22%20fill%3D%22%231a4d4b%22/%3E%3Crect%20x%3D%22160%22%20y%3D%22170%22%20width%3D%2270%22%20height%3D%2270%22%20rx%3D%2210%22%20fill%3D%22%2322605c%22/%3E%3Crect%20x%3D%22240%22%20y%3D%22170%22%20width%3D%2270%22%20height%3D%2270%22%20rx%3D%2210%22%20fill%3D%22%233c8580%22/%3E%3C/svg%3E") calc(var(--kv-u) * 45) 0/calc(var(--kv-u) * 320) calc(var(--kv-u) * 240) repeat;
+  -webkit-mask-image:linear-gradient(#000 0,#000 calc(var(--kv-u) * 90),transparent calc(var(--kv-u) * 330));
+  mask-image:linear-gradient(#000 0,#000 calc(var(--kv-u) * 90),transparent calc(var(--kv-u) * 330))}
+/* the pixel dissolve already provides breathing room: halve the CTA's bottom padding (383.5 -> 192, 300 -> 150) */
+app-sovereign-cta{--sov-cta-pb:192px}
+@media(max-width:1199.98px){app-sovereign-cta{--sov-cta-pb:150px}}

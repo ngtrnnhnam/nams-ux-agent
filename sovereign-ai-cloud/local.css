@@ -1,0 +1,4 @@
+/* Local-only overrides: things the Angular runtime handled on the original. */
+.comp-loading{display:none!important}
+.sov-cap__panel[hidden]{display:none!important}
+.card-heading{cursor:pointer}

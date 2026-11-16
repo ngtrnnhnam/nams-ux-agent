@@ -1,0 +1,85 @@
+{
+  "$meta": {
+    "name": "GreenNode KV · Hyper-Targeted claw machine",
+    "figma": "https://www.figma.com/design/ufc1A7ncZxBWHDe0v335z1 · page 2382:10747 · section 5208:6199",
+    "sourceOfTruth": ["hyper/story.js", "hyper/claw.css", "hyper/story.css", "hyper/footer-kv.css"],
+    "unit": "1 board unit = 1 px in Figma. In CSS every length is calc(var(--sov-u) * N) where --sov-u = boardWidth / 400",
+    "font": { "family": "JetBrains Mono", "weight": 700, "note": "all KV labels; site body text is Inter" },
+    "cornerRule": "radius is about 15% of block size: tile 66 -> 10, pedestal 156 -> 12 (top) / 9 (front), badge + LED -> round"
+  },
+  "color": {
+    "primitive": {
+      "green": { "50": "#D4FFE4", "100": "#B4FFD0", "300": "#3AD574", "400": "#0CC050", "500": "#0AA043", "600": "#0A8F3C", "700": "#0A8538", "800": "#0A602A", "900": "#0B3F20", "950": "#00210D" },
+      "teal": { "950": "#0F3B3B", "900": "#1A4D4B", "800": "#22605C", "700": "#2C716C", "600": "#3C8580", "300": "#8FC2BB", "100": "#CFE9E4" },
+      "white": "#FFFFFF",
+      "gnBrandGreen": "#0DB14B"
+    },
+    "semantic": {
+      "zone.local": { "value": "#0CC050", "css": "--kv-zone-local", "use": "Vietnam zone background" },
+      "zone.global": { "value": "#0F3B3B", "css": "--kv-zone-global", "use": "Global cloud zone background" },
+      "tile.global-1": { "value": "#1A4D4B", "css": "--kv-tile-global-1", "use": "general tile, darkest tone" },
+      "tile.global-2": { "value": "#22605C", "css": "--kv-tile-global-2" },
+      "tile.global-3": { "value": "#2C716C", "css": "--kv-tile-global-3" },
+      "tile.global-4": { "value": "#3C8580", "css": "--kv-tile-global-4", "use": "general tile, lightest tone" },
+      "tile.hidden": { "value": "#2C716C", "css": "--kv-tile-hidden", "use": "sensitive tile before the scan (looks like a general tile)" },
+      "tile.sensitive": { "value": "#FFFFFF", "css": "--kv-tile-sensitive", "use": "sensitive tile once tagged / home" },
+      "tile.depth": { "value": "#0A602A", "css": "--kv-tile-depth", "use": "bottom depth shadow 0 10px 0 on Home tiles" },
+      "content.exposed": { "value": "#0F3B3B", "css": "--kv-content-exposed", "use": "text/icon on a tagged (exposed) tile" },
+      "content.protected": { "value": "#0A8538", "css": "--kv-content-protected", "use": "label on crossed / home tile" },
+      "content.icon-protected": { "value": "#0DB14B", "css": "--kv-content-icon-protected", "use": "icon on crossed / home tile, closed-lock badge fill" },
+      "content.muted": { "value": "#CFE9E4", "css": "--kv-content-muted", "use": "label on general / hidden tile" },
+      "content.global-label": { "value": "#8FC2BB", "css": "--kv-content-global-label", "use": "GLOBAL CLOUD zone label" },
+      "content.on-zone": { "value": "#FFFFFF", "css": "--kv-content-on-zone", "use": "rail, handles, Vietnam zone label, pedestal text" },
+      "content.sealed": { "value": "#D4FFE4", "css": "--kv-content-sealed" },
+      "pedestal.top": { "value": "#0AA043", "css": "--kv-pedestal-top" },
+      "pedestal.top-edge": { "value": "#3AD574", "css": "--kv-pedestal-top-edge", "use": "inset 0 2px 0 on the pedestal top face" },
+      "pedestal.socket": { "value": "#0A8F3C", "css": "--kv-pedestal-socket", "use": "bay fill; 1.5px dashed rgba(255,255,255,.55) border" },
+      "pedestal.front": { "value": "#0A602A", "css": "--kv-pedestal-front" },
+      "led.off": { "value": "#0B3F20", "css": "--kv-led-off" },
+      "led.on": { "value": "#B4FFD0", "css": "--kv-led-on", "use": "plus 0 0 0 1.5px rgba(180,255,208,.35) ring" },
+      "lock.open": { "value": "#0F3B3B", "css": "--kv-lock-open", "use": "open-lock badge fill (exposed)" },
+      "lock.closed": { "value": "#0A8538", "css": "--kv-lock-closed" },
+      "lock.glyph": { "value": "#FFFFFF", "css": "--kv-lock-glyph", "use": "padlock glyph + 1.5px badge ring" },
+      "claw.outline": { "value": "#00210D", "css": "--kv-claw-outline" },
+      "claw.highlight": { "value": "#FFFFFF", "css": "--kv-claw-highlight" },
+      "claw.shade": { "value": "#D4FFE4", "css": "--kv-claw-shade" },
+      "claw.mint": { "value": "#B4FFD0", "css": "--kv-claw-mint" },
+      "claw.accent": { "value": "#0A602A", "css": "--kv-claw-accent" }
+    },
+    "footer": { "ground": "#0B2B2B", "tiles": ["#1A4D4B", "#22605C", "#2C716C", "#3C8580"] },
+    "iconTone": { "Protected": "#0DB14B", "Exposed": "#0F3B3B", "Muted": "#CFE9E4", "figmaCollection": "GN / KV Icon tone" }
+  },
+  "geometry": {
+    "board": { "w": 400, "h": 670, "outerRadiusTop": 12 },
+    "zones": { "globalTop": 272, "globalRadiusTopOnHero07": 300, "borderStyle": "row of 21.8 x 21.8 squares, radius 1.9, fill zone.global, at y 272 (castle-wall edge)" },
+    "rail": { "y": 30, "x1": 25, "x2": 375, "thickness": 1.5, "handle": { "size": 9, "radius": 3, "x": [20.5, 370.5] } },
+    "labels": { "vietnam": { "text": "Vietnam Sovereign AI Cloud", "centerX": 200, "y": 8, "size": 9, "tracking": "0.06em", "icon": "shield 11px" }, "global": { "text": "GLOBAL CLOUD", "centerX": 200, "y": 296, "size": 9, "tracking": "0.06em", "icon": "cloud 11px" } },
+    "tile": { "size": 66, "radius": 10, "iconSize": 28, "gap": 3, "padding": 4, "label": { "size": 8.5, "lineHeight": 1.1, "tracking": "0.02em", "maxWidth": 58, "align": "center" } },
+    "globalGrid": { "columnsX": [25, 95.5, 166, 236.5, 307], "rowsY": [372.2, 442.8, 513.4, 584], "pitchX": 70.5, "pitchY": 70.6, "floorY": 650, "namedTiles": { "CDN": [0, 513.4], "Media": [1, 513.4], "Website": [2, 442.8], "Dev / Test": [3, 584] }, "note": "rowsY[0]=372.2 is only used as the start slot of Customer data / AI training; other cells are unlabeled tiles using tile.global-1..4" },
+    "pedestal": { "w": 156, "h": 106, "topFace": { "h": 88, "radiusTop": 12 }, "frontFace": { "h": 18, "y": 88, "radiusBottom": 9, "paddingX": 9, "labelSize": 8, "tracking": "0.05em" }, "bayOffset": [8, 82], "bayY": 8, "bay": { "size": 66, "radius": 10 }, "led": { "size": 6, "gap": 4 }, "HAN": { "x": 22, "y": 144, "label": "HAN · Hanoi", "bayX": [30, 104] }, "HCM": { "x": 222, "y": 144, "label": "HCM · Ho Chi Minh", "bayX": [230, 304] } },
+    "lockBadge": { "size": 19, "ring": 1.5, "glyph": 12.5, "offset": { "top": -7, "right": -7 }, "round": true },
+    "homeTile": { "slots": { "Customer data": [30, 152], "eKYC": [104, 152], "Payments": [230, 152], "AI training": [304, 152] }, "depth": "0 10px 0 tile.depth" },
+    "claw": { "w": 90, "h": 108, "grid": "20 x 24 pixels, 4.5 board units per pixel (5 px in Figma)", "restX": 154, "restY": 34, "pivotY": -31.5, "cable": { "w": 2, "fromY": 30, "dash": "4 on / 2 off" }, "grips": ["Open", "Half", "Closed"], "palette": ["claw.outline", "claw.highlight", "claw.shade", "claw.mint", "claw.accent"] },
+    "icons": { "grid": 24, "style": "filled + rounded; glyph = currentColor, cut-outs are holes showing the surface colour", "names": ["db (Customer data)", "pay (Payments)", "kyc (eKYC)", "ai (AI training)", "web (Website)", "cdn (CDN)", "dev (Dev / Test)", "media (Media)", "lockOpen", "lockClosed", "shield", "cloud", "arrow"] }
+  },
+  "components": {
+    "Claw": { "figma": "5211:6728", "props": { "Grip": ["Open", "Half", "Closed"] }, "code": "PX_TOP / PX_ARMS in story.js" },
+    "Workload tile": { "figma": "5212:6995", "props": { "State": ["Hidden", "Tagged", "Crossed", "Home"], "Icon": "instance swap", "Name": "text" }, "states": { "Hidden": "bg tile.hidden · text content.muted · no badge", "Tagged": "bg tile.sensitive · text content.exposed · open-lock badge (lock.open)", "Crossed": "bg tile.sensitive · text content.protected · icon content.icon-protected", "Home": "Crossed + depth shadow + closed-lock badge filled content.icon-protected" } },
+    "Global tile": { "figma": "5212:7280", "props": { "Tone": ["1", "2", "3", "4"], "Show label": "boolean", "Icon": "instance swap", "Name": "text" }, "rule": "label + icon use content.muted" },
+    "Lock badge": { "figma": "5212:6578", "props": { "State": ["Open", "Closed"] } },
+    "LED": { "figma": "5212:6581", "props": { "State": ["Off", "On"] } },
+    "DC pedestal": { "figma": "5212:7281", "props": { "Name": "text" }, "parts": ["Top face", "Socket 1", "Socket 2", "Front face (label + 2 LEDs)"] },
+    "Zone label": { "figma": "5212:7360", "props": { "Zone": ["Vietnam", "Global"], "Protected": "boolean (adds '· PROTECTED')" } },
+    "Claw rail": { "figma": "5212:7361" },
+    "Border": { "figma": "5292:93214", "note": "merlon row (see geometry.zones.borderStyle); component 'Border dither' 5212:7365 is the older variant" },
+    "Boards": { "01 Classify": "5213:7034", "03 Carry": "5213:8601", "06 Sealed": "5213:10131", "07 Sealed (current direction)": "5273:92499" },
+    "Footer KV / Dark": { "figma": "5306:7599", "size": "1440 x 480", "asset": "hyper/footer-kv-dark.svg (1440 x 720, top 240 px = pixel dissolve)", "css": "--kv-h max(300px,50vw), --kv-overlap clamp(56px,5.5vw,96px), ground #0B2B2B" }
+  },
+  "story": {
+    "progress": "T in 0..1 over the sticky runway; render is a pure function of T so scrolling up reverses it",
+    "beats": { "idle": [0, 0.02], "scan": [0.02, 0.095], "pick1 Customer data -> HAN bay1": [0.095, 0.205], "pick2 Payments -> HCM bay1": [0.205, 0.29], "pick3 eKYC -> HAN bay2": [0.29, 0.375], "pick4 AI training -> HCM bay2": [0.375, 0.46], "seal": [0.46, 0.52], "section 2 (workloads fly to 5 AZ pins)": [0.52, 0.88], "outro (map shrinks + fades)": [0.88, 0.985] },
+    "autoplayMode": { "attribute": "data-mode=\"c\"", "heroDurationSeconds": 7, "fasterOnScroll": 4, "runway": "230vh (default mode 400vh)" },
+    "motion": { "scrollSmoothingTau": 0.18, "clawSpring": { "stiffness": 60, "damping": 7, "velocityToDegrees": 0.018, "clampDeg": 9 }, "idleSwayDeg": 3, "idleSwayFrequency": 1.3, "tileStateTransition": ".3s ease", "enabledWhen": "min-width 992px, min-height 480px, no prefers-reduced-motion" },
+    "availabilityZones": { "count": 5, "split": "3 HCM, 2 HN", "pinSize": 16, "pinStyle": "square, 3px white border, radius 3" }
+  }
+}

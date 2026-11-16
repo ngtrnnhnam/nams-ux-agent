@@ -1,0 +1,113 @@
+/* Hyper-Targeted hero claw scene. Units: --sov-u (board width / 400).
+   Colour logic
+     Vietnam zone  = GreenNode green (the board's own #0cc050)  -> home, protected
+     Global zone   = dark teal #0f3b3b (the dark frame colour of the original SOVEREIGN board)
+     General work  = muted teal tiles   ·  Sensitive work = white + padlock badge
+   Corner radius follows block size (~15%): tile 66 -> 10, pedestal 156 -> 12, badge/LED -> round. */
+.claw-scene{position:absolute;inset:0;z-index:2}
+.claw-scene i,.claw-scene span{display:block}
+
+/* ---------- icons: filled + rounded, 24 x 24 ----------
+   .g / .gs = glyph (currentColor) · .c / .cs = cut-out detail (--ic-cut = the surface behind the icon) */
+.hc-ico{display:block;overflow:visible}
+.hc-ico .g{fill:currentColor;stroke:currentColor;stroke-width:.9;stroke-linejoin:round}
+.hc-ico .c{fill:var(--ic-cut,#fff);stroke:var(--ic-cut,#fff);stroke-width:.6;stroke-linejoin:round}
+.hc-ico .gs,.hc-ico .cs{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.hc-ico .gs{stroke:currentColor}
+.hc-ico .cs{stroke:var(--ic-cut,#fff)}
+
+/* ---------- zones ---------- */
+.hc-global{position:absolute;left:0;right:0;bottom:0;background:#0f3b3b}
+/* border: a row of small teal squares sitting on the global zone (castle-wall edge) */
+.hc-merlon{position:absolute;width:calc(var(--sov-u)*21.8);height:calc(var(--sov-u)*21.8);border-radius:calc(var(--sov-u)*1.9);background:#0f3b3b}
+/* border: rounded teal squares bleed up, rounded green squares bleed down */
+.hc-dither{position:absolute;left:0;right:0;height:calc(var(--sov-u)*16);pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='8' height='8' rx='2.2' fill='%230f3b3b'/%3E%3Crect x='8' y='8' width='8' height='8' rx='2.2' fill='%230cc050'/%3E%3C/svg%3E") 0 0/calc(var(--sov-u)*16) calc(var(--sov-u)*16) repeat-x}
+.hc-zl{position:absolute;left:calc(var(--sov-u)*21);display:flex!important;align-items:center;gap:calc(var(--sov-u)*5);
+  font-size:calc(var(--sov-u)*9);line-height:1;font-weight:700;letter-spacing:.06em;white-space:nowrap}
+.hc-zl--vn{color:#fff;--ic-cut:#0cc050}
+.hc-zl--gl{color:#8fc2bb;--ic-cut:#0f3b3b}
+.hc-zl-ic{width:calc(var(--sov-u)*11);height:calc(var(--sov-u)*11);flex:none}
+
+/* ---------- rail ---------- */
+.hc-rail{position:absolute;left:calc(var(--sov-u)*25);right:calc(var(--sov-u)*25);height:max(1px,calc(var(--sov-u)*1.5));
+  border-radius:calc(var(--sov-u)*1);background:rgba(255,255,255,.85)}
+.hc-handle{position:absolute;width:calc(var(--sov-u)*9);height:calc(var(--sov-u)*9);border-radius:calc(var(--sov-u)*3);background:#fff}
+
+/* ---------- data-center pedestals (3/4 view: top face + front face) ---------- */
+.hc-ped{position:absolute}
+.hc-ped-top{position:absolute;left:0;right:0;top:0;background:#0aa043;border-radius:calc(var(--sov-u)*12) calc(var(--sov-u)*12) 0 0;
+  box-shadow:inset 0 calc(var(--sov-u)*2) 0 #3ad574}
+.hc-socket{position:absolute;width:calc(var(--sov-u)*66);height:calc(var(--sov-u)*66);border-radius:calc(var(--sov-u)*10);
+  background:#0a8f3c;border:max(1px,calc(var(--sov-u)*1.5)) dashed rgba(255,255,255,.55)}
+.hc-ped-front{position:absolute;left:0;right:0;display:flex!important;align-items:center;justify-content:space-between;
+  padding:0 calc(var(--sov-u)*9);background:#0a602a;border-radius:0 0 calc(var(--sov-u)*9) calc(var(--sov-u)*9);
+  color:#fff;font-size:calc(var(--sov-u)*8);font-weight:700;letter-spacing:.05em;white-space:nowrap}
+.hc-leds{display:flex!important;gap:calc(var(--sov-u)*4)}
+.hc-led{width:calc(var(--sov-u)*6);height:calc(var(--sov-u)*6);border-radius:50%;background:#0b3f20;transition:background-color .2s}
+.hc-led.is-on{background:#b4ffd0;box-shadow:0 0 0 calc(var(--sov-u)*1.5) rgba(180,255,208,.35)}
+
+/* ---------- workload blocks ---------- */
+.hc-block{position:absolute;top:0;left:0;width:calc(var(--sov-u)*66);height:calc(var(--sov-u)*66);border-radius:calc(var(--sov-u)*10);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(var(--sov-u)*3);padding:calc(var(--sov-u)*4);text-align:center;
+  transition:background-color .3s ease,color .3s ease,box-shadow .35s steps(5,end),opacity .4s ease}
+.hc-icon{width:calc(var(--sov-u)*28);height:calc(var(--sov-u)*28);flex:none}
+.hc-name{font-size:calc(var(--sov-u)*8.5);line-height:1.1;font-weight:700;letter-spacing:.02em}
+.hc-gen{color:#cfe9e4}
+/* sensitive block states: hidden (looks general) > tagged (white, open lock) > crossed (green) > home (depth, closed lock) */
+.hc-work.is-hidden{background:#2c716c;color:#cfe9e4;--ic-cut:#2c716c}
+.hc-work.is-tagged{background:#fff;color:#0f3b3b;--ic-cut:#fff}
+.hc-work.is-crossed{color:#0a8538}
+.hc-work.is-crossed .hc-icon,.hc-work.is-home .hc-icon{color:#0db14b}
+.hc-work.is-home{background:#fff;color:#0a8538;box-shadow:0 calc(var(--sov-u)*10) 0 #0a602a}
+/* padlock badge: round chip with a white ring (GreenNode icon style) */
+.hc-lock{position:absolute!important;top:calc(var(--sov-u)*-7);right:calc(var(--sov-u)*-7);width:calc(var(--sov-u)*19);height:calc(var(--sov-u)*19);
+  border-radius:50%;display:flex!important;align-items:center;justify-content:center;background:#0f3b3b;color:#fff;--ic-cut:#0f3b3b;
+  box-shadow:0 0 0 calc(var(--sov-u)*1.5) #fff;
+  opacity:0;scale:.3;transition:opacity .2s ease,scale .25s cubic-bezier(.34,1.56,.64,1),background-color .25s ease}
+.hc-lock svg{width:calc(var(--sov-u)*12.5);height:calc(var(--sov-u)*12.5)}
+.hc-lock-closed{display:none!important}
+.hc-work.is-tagged .hc-lock{opacity:1;scale:1}
+.hc-work.is-home .hc-lock{background:#0db14b;--ic-cut:#0db14b;animation:hcPop .45s cubic-bezier(.34,1.56,.64,1)}
+.hc-work.is-home .hc-lock-open{display:none!important}
+.hc-work.is-home .hc-lock-closed{display:block!important}
+.hc-work.is-target{animation:hcTarget .7s steps(2,jump-none) 1}
+
+/* ---------- effects ---------- */
+.hc-gate{display:none!important;position:absolute;left:0;width:calc(var(--sov-u)*82);height:calc(var(--sov-u)*16);background:#fff;opacity:0;
+  border-radius:calc(var(--sov-u)*6);pointer-events:none}
+.hc-scan{position:absolute;left:0;right:0;top:0;height:calc(var(--sov-u)*2);border-radius:calc(var(--sov-u)*1);background:#fff;opacity:0;pointer-events:none;
+  box-shadow:0 calc(var(--sov-u)*3) 0 rgba(255,255,255,.35),0 calc(var(--sov-u)*8) 0 rgba(255,255,255,.15);transition:opacity .25s}
+.hc-sweep{display:none!important;position:absolute;left:0;right:0;top:0;height:calc(var(--sov-u)*24);background:rgba(255,255,255,.22);opacity:0;pointer-events:none}
+.hc-ring{display:none!important;position:absolute;top:0;left:0;width:calc(var(--sov-u)*66);height:calc(var(--sov-u)*66);border:calc(var(--sov-u)*3) solid #fff;
+  border-radius:calc(var(--sov-u)*14);pointer-events:none;opacity:0;animation:hcRing .8s steps(6,end) forwards}
+
+@keyframes hcTarget{0%,50%,100%{box-shadow:0 0 0 0 transparent}25%,75%{box-shadow:0 0 0 calc(var(--sov-u)*4) #fff}}
+@keyframes hcRing{0%{opacity:.95;scale:1}100%{opacity:0;scale:1.6}}
+@keyframes hcPop{0%{scale:1}40%{scale:1.4}100%{scale:1}}
+@keyframes hcBlink{50%{opacity:.25}}
+
+/* ---------- claw: rounded vector, 20 x 24 grid (same silhouette as the pixel version) ---------- */
+.hc-claw{position:absolute;top:0;left:0;z-index:4}
+.hc-cable{position:absolute;width:max(1px,calc(var(--sov-u)*2));border-radius:calc(var(--sov-u)*1);
+  background-image:repeating-linear-gradient(to bottom,#fff 0 calc(var(--sov-u)*4),transparent calc(var(--sov-u)*4) calc(var(--sov-u)*6))}
+.hc-head{position:absolute;top:0;left:0}
+.hc-swing{position:absolute;inset:0;transform-origin:50% 0}
+.hc-f{position:absolute;inset:0;width:100%;height:100%;visibility:hidden;overflow:visible}
+.hc-claw[data-grip="open"] .hc-f--open,
+.hc-claw[data-grip="half"] .hc-f--half,
+.hc-claw[data-grip="closed"] .hc-f--closed{visibility:visible}
+.hc-f .ck{fill:#00210d}
+.hc-f .cw{fill:#fff}
+.hc-f .cl{fill:#d4ffe4}
+.hc-f .cm{fill:#b4ffd0}
+.hc-f .cd{fill:#0a602a}
+.hc-f .ca-k,.hc-f .ca-l,.hc-f .ca-w{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.hc-f .ca-k{stroke:#00210d;stroke-width:2.9}
+.hc-f .ca-l{stroke:#d4ffe4;stroke-width:2.1}
+.hc-f .ca-w{stroke:#fff;stroke-width:1.1}
+
+@media (prefers-reduced-motion:reduce){
+  .hc-block{transition:none!important}
+  .hc-work,.hc-ring,.hc-led,.hc-zl-ic{animation:none!important}
+}
